@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人数据中心</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>上传数据</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" required>
+            <input type="text" name="remark" placeholder="备注" required>
+            <input type="number" step="0.01" name="amount" placeholder="金额" required>
+            <button type="submit">上传</button>
+        </form>
+
+        <h2>数据中心</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>图片</th>
+                    <th>备注</th>
+                    <th>金额</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in data_list %}
+                <tr>
+                    <td><img src="{{ data.image_filename }}" width="100"></td>
+                    <td>{{ data.remark }}</td>
+                    <td>{{ data.amount }}</td>
+                    <td><a href="/delete/{{ data.id }}">删除</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>总金额：{{ total_amount }}</h3>
+
+        <form action="/export" method="get">
+            <button type="submit">导出为Word文档</button>
+        </form>
+    </div>
+</body>
+</html>
